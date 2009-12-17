@@ -2,10 +2,13 @@
 
 module Dataprocessing
 
-def writeLog(wert,log)
-	#hier kommt der Code hin, der Logs schreibt
-	puts wert
-	puts log
+def writeLog(wert, logfile)
+#TO DO: prüfen ob datei vorhanden -> wenn nicht, titelzeile erstellen
+	File.open("../log/"+logfile,"a") do |datei|
+		datei.puts
+		datei.print Time.now.strftime("%d/%m/%Y.2%H:%M")
+		datei.print wert
+	end
 end
 
 def drawPlot(log, outputfile)

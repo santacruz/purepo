@@ -35,13 +35,31 @@ end
 
 class Spannung
 	#Attribute werden festgelegt:
-	attr_accessor :zahlwert, :quelle
+	attr_accessor :zahlwert, :quelle, :diagrammtiteljahr, :diagrammtitelmonat
 	
 	#initialisierung per default als Temperatur
 	def initialize(zahlwert, quelle = "temperatur")
 		@zahlwert = zahlwert
 		@quelle = quelle
+		#Hier wird der Diagrammtitel entschieden.
+		case quelle
+			when "zufall"
+				@diagrammtiteljahr = "Zufälle des Jahres "+Time.now.year.to_s
+				@diagrammtitelmonat = "Zufälle "+Time.now.strftime("%B %Y")
+			when "temperatur"
+				@diagrammtiteljahr = "Temperaturen des Jahres "+Time.now.year.to_s
+				@diagrammtitelmonat = "Temperaturen "+Time.now.strftime("%B %Y")
+			when "humidity"
+				@diagrammtiteljahr = "Luftfeuchtigkeiten des Jahres "+Time.now.year.to_s
+				@diagrammtitelmonat = "Leuftfeuchtigkeiten "+Time.now.strftime("%B %Y")
+			else
+				$log.warn("Wert "+wert.to_s+" ist nicht implementiert zum Graph zeichnen")
+				$log.warn("skip")
+				#nichts zeichnen, wenn der Wert nicht vorgesehen ist.
+				next
+		end
 	end
+	
 	
 	def to_i
 		case @quelle
@@ -73,6 +91,7 @@ class Spannung
 		puts "quelle: "+quelle
 		#self.to_wert
 	end
+	
 
 end
 
